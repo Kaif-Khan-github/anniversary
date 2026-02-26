@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Anniversary Mom & Dad</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #050510;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- Full Page Background --- */
+        #canvas {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            z-index: -1;
+        }
+
+        /* --- Start Overlay (Click to Play) --- */
+        #overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        /* --- Center Stage --- */
+        .stage {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- The Running Animation --- */
+        /* Moves back and forth horizontally within the screen */
+        .running-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: runAcross 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes runAcross {
+            0% { transform: translateX(-15%); }
+            100% { transform: translateX(15%); }
+        }
+
+        /* --- 3 Lines of Wishes --- */
+        .text-line {
+            font-family: 'Dancing Script', cursive;
+            text-align: center;
+            white-space: nowrap;
+            animation: colorShift 5s infinite alternate;
+        }
+
+        .line-1 { font-size: 3.5rem; }
+        .line-2 { font-size: 5.5rem; font-weight: bold; margin: -10px 0; }
+        .line-3 { font-size: 3rem; }
+
+        @keyframes colorShift {
+            0% { color: #ffb7c5; text-shadow: 0 0 20px #ff85a1; }
+            50% { color: #d4f1f4; text-shadow: 0 0 20px #75e6da; }
+            100% { color: #e6e6fa; text-shadow: 0 0 20px #b19cd9; }
+        }
+
+        /* --- Bunny Character --- */
+        .bunny {
+            position: relative;
+            width: 130px;
+            height: 110px;
+            background: white;
+            border-radius: 50% 50% 45% 45%;
+            margin-bottom: 25px;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        .ear {
+            position: absolute;
+            top: -45px;
+            width: 32px;
+            height: 65px;
+            background: white;
+            border-radius: 50% 50% 0 0;
+        }
+        .ear.left { left: 25px; transform: rotate(-12deg); }
+        .ear.right { right: 25px; transform: rotate(12deg); }
+
+        .heart {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 42px;
+            animation: heartPulse 0.8s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.2); }
+        }
+
+        /* --- Personal Message & Signature --- */
+        .personal-msg {
+            margin-top: 25px;
+            color: #eee;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-style: italic;
+            opacity: 0.9;
+            max-width: 400px;
+        }
+
+        .daaniya-signature {
+            margin-top: 15px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #ffb7c5;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 5px #fff; }
+            to { text-shadow: 0 0 20px #ff85a1; }
+        }
+
+        /* --- Balloon Animation --- */
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 40px;
+            height: 50px;
+            border-radius: 50%;
+            animation: rise 12s linear infinite;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0) rotate(0); opacity: 0; }
+            10% { opacity: 0.6; }
+            100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="overlay" onclick="startApp()">
+        <div>
+            <h1 style="font-family: 'Dancing Script'; font-size: 4rem;">Happy Anniversary!</h1>
+            <p>Click to start the celebration, Daaniya ✨</p>
+        </div>
+    </div>
+
+    <div id="canvas"></div>
+
+    <div class="stage">
+        <div class="running-container">
+            <div class="bunny">
+                <div class="ear left"></div>
+                <div class="ear right"></div>
+                <div class="heart">❤️</div>
+            </div>
+
+            <div class="text-line line-1">Happy Anniversary</div>
+            <div class="text-line line-2">MOM & DAD</div>
+            <div class="text-line line-3">Forever Together</div>
+
+            <div class="personal-msg">
+                Thank you for being the perfect example of love.<br>
+                May your lives be filled with endless joy and laughter.<br>
+                I am so lucky to have you both!
+            </div>
+
+            <div class="daaniya-signature">With lots of love, Daaniya 💖</div>
+        </div>
+    </div>
+
+    <audio id="music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        function startApp() {
+            // Remove overlay
+            document.getElementById('overlay').style.display = 'none';
+            // Start Music
+            document.getElementById('music').play();
+            // Start Effects
+            setInterval(createBalloon, 2500);
+            createStars();
+        }
+
+        function createBalloon() {
+            const b = document.createElement('div');
+            b.className = 'balloon';
+            const colors = ['#ffb7c5', '#d4f1f4', '#e6e6fa', '#fff5e1'];
+            b.style.background = colors[Math.floor(Math.random()*4)];
+            b.style.left = Math.random() * 100 + "vw";
+            document.body.appendChild(b);
+            setTimeout(() => b.remove(), 12000);
+        }
+
+        function createStars() {
+            const canvas = document.getElementById('canvas');
+            for (let i = 0; i < 120; i++) {
+                const s = document.createElement('div');
+                s.style.position = 'absolute';
+                s.style.width = Math.random() * 3 + 'px';
+                s.style.height = s.style.width;
+                s.style.background = 'white';
+                s.style.left = Math.random() * 100 + 'vw';
+                s.style.top = Math.random() * 100 + 'vh';
+                s.style.opacity = Math.random();
+                s.style.borderRadius = '50%';
+                canvas.appendChild(s);
+            }
+        }
+    </script>
+</body>
+</html>
