@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Anniversary ❤️</title>
+
+<style>
+body{
+  margin:0;
+  text-align:center;
+  font-family: 'Segoe UI', sans-serif;
+  color:white;
+  background: radial-gradient(circle at bottom, #020111 0%, #000000 100%);
+  overflow:hidden;
+}
+
+h1{
+  margin-top:30px;
+  font-size:40px;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow{
+  from{ text-shadow:0 0 10px #ff4da6;}
+  to{ text-shadow:0 0 25px #ff99cc;}
+}
+
+.photo{
+  width:260px;
+  border-radius:20px;
+  margin-top:20px;
+  box-shadow:0 0 25px pink;
+}
+
+#message{
+  font-size:22px;
+  width:80%;
+  margin:auto;
+  margin-top:20px;
+  min-height:60px;
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+}
+button{
+  padding:12px 25px;
+  font-size:18px;
+  border:none;
+  border-radius:10px;
+  background:#ff4da6;
+  color:white;
+  margin-top:30px;
+}
+</style>
+</head>
+
+<body onclick="playMusic()">
+
+<canvas id="fireworks"></canvas>
+
+<h1>Happy Anniversary 💖</h1>
+
+<img src="PHOTO_NAME_HERE" class="photo">
+
+<div id="message"></div>
+
+<button>Touch Anywhere for Music 🎵</button>
+
+<audio id="music" loop>
+  <source src="SONG_NAME_HERE" type="audio/mpeg">
+</audio>
+
+<script>
+function playMusic(){
+  document.getElementById("music").play();
+}
+</script>
+
+<script>
+// Typing Text
+let text = "MESSAGE_HERE";
+let i = 0;
+function typing(){
+  if(i < text.length){
+    document.getElementById("message").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typing, 50);
+  }
+}
+typing();
+
+// Fireworks
+let canvas = document.getElementById("fireworks");
+let ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+function createFirework(){
+  let x = Math.random() * canvas.width;
+  let y = Math.random() * canvas.height / 2;
+
+  for(let i=0;i<80;i++){
+    particles.push({
+      x:x,
+      y:y,
+      dx:(Math.random()-0.5)*5,
+      dy:(Math.random()-0.5)*5,
+      life:100
+    });
+  }
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach((p,index)=>{
+    p.x += p.dx;
+    p.y += p.dy;
+    p.life--;
+
+    ctx.fillStyle = "hsl(" + Math.random()*360 + ",100%,50%)";
+    ctx.fillRect(p.x,p.y,3,3);
+
+    if(p.life<=0) particles.splice(index,1);
+  });
+
+  requestAnimationFrame(animate);
+}
+
+setInterval(createFirework,1200);
+animate();
+</script>
+
+</body>
+</html>
